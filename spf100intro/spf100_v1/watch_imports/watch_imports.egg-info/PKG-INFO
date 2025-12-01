@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: watch-imports
+Version: 0.0.1
+Summary: When imported it prints other imports so you can find the circular references.
+Home-page: UNKNOWN
+Author: MarkBaggett
+Author-email: mbaggett@sans.org
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+When imported it prints other imports so you can find the circular references.
+

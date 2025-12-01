@@ -11,7 +11,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires = [],
     entry_points = {
-        'console_scripts': ['watch_imports=watch_imports.__main__:main']
+        'console_scripts': ['watch_imports=watch_imports.__main__:main',
+        'myprogram=watch_imports.__main__:about']
         },
     python_requires='>=3.6'
 )

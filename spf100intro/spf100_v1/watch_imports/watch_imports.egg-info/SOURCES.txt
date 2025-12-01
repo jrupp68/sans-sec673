@@ -1,0 +1,9 @@
+setup.py
+watch_imports/__init__.py
+watch_imports/__main__.py
+watch_imports/import_watcher.py
+watch_imports.egg-info/PKG-INFO
+watch_imports.egg-info/SOURCES.txt
+watch_imports.egg-info/dependency_links.txt
+watch_imports.egg-info/entry_points.txt
+watch_imports.egg-info/top_level.txt
