@@ -1,0 +1,4 @@
+[console_scripts]
+myprogram = watch_imports.__main__:about
+watch_imports = watch_imports.__main__:main
+

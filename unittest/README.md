@@ -1,0 +1,5 @@
+# Python Unittesting and Visual Studio Code
+
+Most of the pyWars labs will deliver a folder with a partially completed program do your desktop. This README will tell you what you must do to complete the program. For some of these challenges you may choose to complete the program based solely on the information in this README without consulting the workbook. You can think of the workbook as "the answers" and this README as the "no-hints" description of the steps you must complete.  
+
+If you choose to only look at the README and not use the workbook, you will often miss out on additional learning opportunities and explanations that are only given in the workbook! Additionally, if you choose not to use the workbook, you may not complete the labs in the time provided. It is highly recommended that you use the workbooks when completing the labs. To that end, this challenge is a little different! To complete this lab, you must consult the workbook and follow the instructions there.
