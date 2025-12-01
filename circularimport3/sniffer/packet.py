@@ -1,0 +1,3 @@
+
+class Packet(list):
+    pass
