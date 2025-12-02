@@ -8,6 +8,36 @@ class Packet(UserList):
             raise TypeError
         self.data.__setitem__(pos, data)
 
+    def layer2num(self, layer):
+        if layer == None:
+            return layer
+        elif isinstance(layer, int):
+            return layer
+        elif isinstance(layer, str):
+            for eachpos, eachproto in enumerate(self.data):
+                if eachproto.name == layer:
+                    return eachpos
+        else:
+            raise TypeError
+
+    def __getitem__(self, pos):
+        if isinstance(pos, int):
+           return self.data[pos]
+        elif isinstance(pos, slice):
+            start = self.layer2num(pos.start)
+            stop = self.layer2num(pos.stop)
+            step = self.layer2num(pos.step)
+            print(type(start),type(stop),type(step))
+            new_slice = slice(start,stop,step)
+            return self.data[new_slice]
+        elif isinstance(pos, str):
+            for eachproto in self.data:
+                if eachproto.name == pos:
+                    return eachproto
+            raise KeyError
+        else:
+            raise TypeError
+
     def __init__(self, iterable=[]):
         if not isinstance(iterable, list):
             raise TypeError("Argument must be a list of Protocols")
