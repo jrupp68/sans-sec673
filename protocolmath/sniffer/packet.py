@@ -28,3 +28,14 @@ class Packet(UserList):
             raise TypeError("Packet can only contain Protocols")
         self.data.append(data)
 
+    def __add__(self, second_value):
+        if isinstance(second_value, Packet):
+            return Packet([*self, *second_value])
+        elif isinstance(second_value, Protocol):
+            return Packet([*self, second_value])
+        else:
+            return NotImplemented
+        
+    def __radd__(self, first_value):
+        if isinstance(first_value, Protocol):
+            return Packet([first_value, *self])

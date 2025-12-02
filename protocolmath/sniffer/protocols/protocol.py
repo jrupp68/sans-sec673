@@ -24,3 +24,10 @@ class Protocol(object):
 
     def __repr__(self):
         return f"{self.__class__.__qualname__}(header={codecs.encode(self.raw,'hex').decode()[:self.header_length]}, payload={self.raw_payload})"
+    
+    def __add__(self, second_value):
+        from sniffer.packet import Packet
+        if isinstance(second_value, Protocol):
+            return Packet([self, second_value])
+        else:
+            return NotImplemented
