@@ -31,3 +31,9 @@ class Protocol(object):
         if isinstance(otherthing, Protocol):
             return Packet([self,otherthing])
         return NotImplemented
+    
+    def __getattr__(self, name):
+        if self.parsed.get(name):
+            return self.parsed.get(name)
+        else:
+            raise AttributeError
