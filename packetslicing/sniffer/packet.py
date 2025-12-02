@@ -8,6 +8,19 @@ class Packet(UserList):
             raise TypeError
         self.data.__setitem__(pos, data)
 
+    def __getitem__(self, pos):
+        if isinstance(pos, int):
+           return self.data[pos]
+        elif isinstance(pos, slice):
+            return self.data[pos]
+        elif isinstance(pos, str):
+            for eachproto in self.data:
+                if eachproto.name == pos:
+                    return eachproto
+            raise KeyError
+        else:
+            raise TypeError
+
     def __init__(self, iterable=[]):
         if not isinstance(iterable, list):
             raise TypeError("Argument must be a list of Protocols")
