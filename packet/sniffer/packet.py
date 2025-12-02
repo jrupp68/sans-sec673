@@ -3,33 +3,25 @@ from sniffer.protocols import Protocol
 
 class Packet(UserList):
     
-    def __init__(self, initlist=None):
-        self.data = []
-        if initlist:
-            if type(initlist) == list():
-                self.data.append(initlist)
+    def __init__(self, iterable=[]):
+        super().__init__(self)
+        self.extend(iterable)
 
-    def __setitem__(self, pos, data):
-        if type(data) != Protocol:
-            print('Packet can only contains Protocols')
+    def extend(self, iterable):
+        for val in iterable:
+            self.append(val)
+
+    def append(self, val):
+        if not isinstance(val,Protocol):
             raise TypeError
-        self.data[pos] = data
+        self.data.append(val)
 
-    def append(self, data):
-        if type(data) != Protocol:
-            print('Packet can only contains Protocols')
+    def __setitem__(self, pos, val):
+        if not isinstance(val,Protocol):
             raise TypeError
-        self.data.append(data)
+        self.data[pos] = val
 
-    def extend(self, data):
-        for item in data:
-            if type(item) != Protocol:
-                print('Packet can only contain Protocols')
-                raise TypeError
-            self.data.append(item)
-
-    def insert(self, pos, data):
-        if type(data) != Protocol:
-            print('Packet can only contains Protocols')
+    def insert(self, pos, val):
+        if not isinstance(val,Protocol):
             raise TypeError
-        self.data.insert(pos, data)
+        self.data.insert(pos, val)
