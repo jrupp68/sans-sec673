@@ -1,0 +1,2 @@
+class NamedInteger(int):
+    pass
