@@ -1,5 +1,5 @@
+import ipaddress
 from sniffer.protocols import *
-
 
 class Filter(object):
     def __init__(self, protocol, field, value):
@@ -24,6 +24,10 @@ class Filter(object):
             # Then turn each ipaddress object into a string
         # If address was just a single address (not a range with a mask), make it the only item in a list
         # return a list of strings that are ip addresses 
+        if '/' in addr:
+            return list(map(str, ipaddress.ip_network(addr, strict=False)))
+        else:
+            return addr
 
 
     def __eq__(self, other):
@@ -41,8 +45,22 @@ class Filter(object):
                     #If it was a single value confirm that the protocol value matches the value. If so return True
                 #If the values didn't match or the packet doesnt have the protocol return False
         #If other wasn't a list of protocols return NotImplemented 
+        if isinstance(other, Protocol):
+            raise TypeError
+        if isinstance(other, list):
+            for eachproto in other:
+                if eachproto.name == self.protocol:
+                    filter_value = getattr(eachproto, self.field)
+                    if isinstance(self.value, list):
+                        if filter_value in self.value:
+                            return True
+                        return False
+                    return filter_value == self.value
+            return False
+        return NotImplemented
 
     def __repr__(self):
         #complete this function
         #Your filter object should have repr that produces a string similar to the way you create a filter
         #Something like "Filter(protocol='{the protocol you filter on}', field='{the field to match}', value = {the expected value})"
+        return f"Filter(Protocol='{self.protocol}, field='{self.field}', value= {self.value})"
