@@ -6,6 +6,7 @@ class Packet(UserList):
     def __setitem__(self, pos, data):
         if not isinstance(data, Protocol):
             raise TypeError
+        data.my_packet = self
         self.data.__setitem__(pos, data)
 
     def __init__(self, iterable=[]):
@@ -21,11 +22,13 @@ class Packet(UserList):
     def insert(self, pos, data):
         if not isinstance(data, Protocol):
             raise TypeError("Packet can only contain Protocols")
+        data.my_packet = self
         self.data.insert(pos, data)
 
     def append(self,data):
         if not isinstance(data, Protocol):
             raise TypeError("Packet can only contain Protocols")
+        data.my_packet = self
         self.data.append(data)
 
     def __add__(self,second_value):

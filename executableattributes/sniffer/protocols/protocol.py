@@ -7,7 +7,8 @@ class Protocol(object):
     header_length = None
     header_fields = None
 
-    def __init__(self, bytes = b"\x45"*50):
+
+    def __init__(self, bytes = b"\x45"*50, packet = None):
         assert self.header_fields != None, "Class requires a header_fields attribute."
         assert self.header_format != None, "Class requires a header_format attribute."
         assert self.header_length != None, "Class requires a header_length attribute."
@@ -15,6 +16,7 @@ class Protocol(object):
         self.name = self.__class__.__qualname__
         self.embedded_protocol = "RAW"
         self.process(bytes)
+        self.my_packet = packet
 
 
     def process(self, bytes_in):
@@ -36,3 +38,31 @@ class Protocol(object):
         if name in self.parsed:
             return self.parsed.get(name)
         raise AttributeError(f"{self.name} has no attribute {name}")
+
+    @property
+    def encapsulator(self):
+        assert self.my_packet != None, "Lonely Packet"
+        # I'm in the start of the list, can't go up
+        if self.my_packet[0] == self:
+            return None
+        index = self.my_packet.index(self)
+        return self.my_packet[index - 1]
+    
+    @property
+    def encapsulated(self):
+        # return protocol direclty after this protocol in the same packet
+
+        # check if this is actualy in a packet
+        assert self.my_packet != None, "Lonely Packet"
+
+        # check if this is at the end of the list can't go down
+        if self.my_packet[-1] == self:
+            return None
+
+        # get index of self in the packet
+        index = self.my_packet.index(self)
+
+        # return the protocol following
+        return self.my_packet[index + 1]
+
+    
