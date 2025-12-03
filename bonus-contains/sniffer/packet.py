@@ -54,3 +54,16 @@ class Packet(UserList):
             icmp_frame = ICMP(ip_frame.raw_payload, self)
             self.append(icmp_frame)
 
+    def haslayer(self, layer:str):
+        for proto in self.data:
+            if proto.name == layer:
+                return True
+        return False
+    
+    def __contains__(self, item):
+        for proto in self.data:
+            if proto.name == item:
+                return True
+        return False
+
+
