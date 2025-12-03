@@ -14,6 +14,18 @@ from sniffer.packet import Packet
     #You need a dunder next method that does all of the following:
         #It retrieves the next() value from the iterator recorded by init repeatedly to find the next packet that matches the display_filter recorded in init
         #If you reach the end of the list raise a StopIteration exception
+class PacketIterator(object):
+
+    def __init__(self, pktlist):
+        self.iter =  super(PacketList,pktlist).__iter__()
+        self.filter = pktlist.display_filter
+
+    def __next__(self):
+        val = next(self.iter)
+        if self.filter != None:
+            while val != self.filter:
+                val = next(self.iter)
+        return val
 
 
 class PacketList(list):     
@@ -29,9 +41,14 @@ class PacketList(list):
     #This object needs a dunder iter method defined
         #It should return a new PacketIterator object
         #You need to pass a copy of self to the new PacketIterator
+    def __iter__(self):
+        return PacketIterator(self)
 
     #This object needs a new dunder len method defined
         #It should return a length that counts the number of items that match self.display_filter
+
+    def __len__(self):
+        return len([x for x in self])
 
     def __setitem__(self, pos, data):
         if not isinstance(data, Packet):
