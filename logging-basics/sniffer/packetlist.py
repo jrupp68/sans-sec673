@@ -3,12 +3,15 @@ import os
 import struct
 import datetime
 import pathlib
+import logging
 
 from sniffer.protocols import *
 from sniffer.packet import Packet
 
 class PacketList(list):     
     def __init__(self, iterable=[]):
+        self.logger = logging.getLogger(__name__ + "." + type(self).__name__)
+        self.logger.info("Init method was executed.")
         if not isinstance(iterable, list):
             raise TypeError
         super().__init__()
@@ -82,6 +85,7 @@ class PacketList(list):
         sniff_count = 0
         while sniff_count < count:
             data = raw_socket.recv(65535)
+            self.logger.critical(f"Sniffer sniffed! {data[:10]}")
             new_packet = Packet()
             new_packet.from_bytes(data, self.no_ethernet)
             #These three lines are added from filter lab

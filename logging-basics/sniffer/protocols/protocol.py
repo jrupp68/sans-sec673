@@ -1,6 +1,6 @@
 import struct
 import codecs
-
+import logging
 
 class Protocol(object):
     header_format = None
@@ -8,6 +8,8 @@ class Protocol(object):
     header_fields = None
 
     def __init__(self, bytes = b"\x45"*50, packet = None):
+        self.logger = logging.getLogger(__name__ + "." + type(self).__name__)
+        self.logger.info("Init method was executed.")
         assert self.header_fields != None, "Class requires a header_fields attribute."
         assert self.header_format != None, "Class requires a header_format attribute."
         assert self.header_length != None, "Class requires a header_length attribute."

@@ -1,3 +1,4 @@
+import logging
 from collections import UserList
 from sniffer.protocols import *
 
@@ -9,6 +10,8 @@ class Packet(UserList):
         self.data.__setitem__(pos, data)
 
     def __init__(self, iterable=[]):
+        self.logger = logging.getLogger(__name__ + "." + type(self).__name__)
+        self.logger.info("Init method was executed.")
         if not isinstance(iterable, list):
             raise TypeError("Argument must be a list of Protocols")
         super().__init__()
