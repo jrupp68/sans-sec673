@@ -38,6 +38,12 @@ class Protocol(object):
         if name in self.parsed:
             return self.parsed.get(name)
         raise AttributeError(f"{self.name} has no attribute {name}")
+    
+    def __getstate__(self):
+        return vars(self)
+    
+    def __setstate__(self, state):
+        vars(self).update(state)
 
     @property
     def encapsulator(self):

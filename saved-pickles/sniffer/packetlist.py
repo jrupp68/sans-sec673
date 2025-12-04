@@ -3,6 +3,7 @@ import os
 import struct
 import datetime
 import pathlib
+import pickle
 
 from sniffer.protocols import *
 from sniffer.packet import Packet
@@ -94,3 +95,15 @@ class PacketList(list):
                 print(prn(new_packet))
             if store:
                 self.append(new_packet)
+
+    def save(self, fname = "sniffer_state.bin"):
+        with pathlib.Path(fname).open('wb') as file_handle:
+            pickle.dump(self, file_handle)
+
+    def load(self, fname = "sniffer_state.bin"):
+        with pathlib.Path(fname).open('rb') as file_handle:
+            self.extend( pickle.load(file_handle))
+
+    def load_new(self, fname = "sniffer_state.bin"):
+        with pathlib.Path(fname).open('rb') as file_handle:
+            return pickle.load(file_handle)
