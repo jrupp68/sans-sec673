@@ -103,9 +103,15 @@ def solution() -> List[Tuple[bytes, bytes, bytes]]:
     """
     # This is the actual data from d.data('bonus-coin-miner2')
     challenges = [
-        (bytes.fromhex('000000f9b79b2ec070ac8e51f724a6fba96d621b97a471ecbbc653e765249368'), 10),
-        (bytes.fromhex('000000cebf9b2ec070ac8e51f724a6fba96d621b97a471ecbbc653e7652493aa'), 20),
+        (bytes.fromhex('000000a116142a248c18c0b3d66a6416af792046c54865ec09f51f457fce0ffe'), 20),
+        (bytes.fromhex('0000000000d9a725b1454203960fd6d515f565416e8c3088218742acefc441a5'), 26),
     ]
+
+    # challenges = [
+    #     (b'\x00\x00\x00\xfd\x13\xeb\xaeyD\xbd\xc4\x16\x92\xa4\xfco\x871962\xa2\xf4\xc1\x07H\xb7h4WL\xf4', 20), 
+    #     (b'\x00\x00\x00\x00\x00\xaa<\x89\xa8>\xfb\x97\xaar\xbe\x82(\x08y\xce\xda\x8cx\x1a\xc9\xbf\x1b\xb2\xacp\xccn', 26)
+    # ]
+    
 
     answer = []
     for prev_block, diff in challenges:
