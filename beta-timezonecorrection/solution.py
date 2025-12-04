@@ -12,9 +12,12 @@ def convert_timestamp(input):
     months = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7,
               'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
     log = input[0]
-    attacker_timezone_string = input[1]
-    attacker_timezone = zoneinfo.ZoneInfo(attacker_timezone_string)
+    
+    attacker_timezone = zoneinfo.ZoneInfo(input[1])
+    
     log_timestamp = re.findall('\[.+\]', log)[0]
+    x = datetime.strptime('[%d/%b/%Y:%H:%M:%S %z]', log_timestamp)
+
     log_year = int(re.findall('\d{4}', log_timestamp)[0])
     log_month_str = re.findall('\w{3}', log_timestamp)[0]
     log_month = months[log_month_str]
