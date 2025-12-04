@@ -9,34 +9,21 @@ input = d.data(49)
 answer = []
 
 def convert_timestamp(input):
-    months = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7,
-              'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
-    log = input[0]
-    
     attacker_timezone = zoneinfo.ZoneInfo(input[1])
-    
-    log_timestamp = re.findall('\[.+\]', log)[0]
-    x = datetime.strptime('[%d/%b/%Y:%H:%M:%S %z]', log_timestamp)
+    log_pre_string = re.findall('[\d\.]+ - - ', input[0])[0]
+    log_timestamp = re.findall('\[.+\]', input[0])[0]
+    log_post_string = re.findall('](\s\w+\s\/)', input[0])[0]
+    server_dt = datetime.strptime(log_timestamp, '[%d/%b/%Y:%H:%M:%S %z]')
+    attacker_dt = server_dt.astimezone(attacker_timezone)
+    output_timestamp = attacker_dt.strftime('[%d/%b/%Y:%H:%M:%S %z]')  
+    return log_pre_string + output_timestamp + log_post_string          
 
-    log_year = int(re.findall('\d{4}', log_timestamp)[0])
-    log_month_str = re.findall('\w{3}', log_timestamp)[0]
-    log_month = months[log_month_str]
-    log_hour = int(log_timestamp[13:15])
-    log_min = int(log_timestamp[16:18])
-    log_sec = int(log_timestamp[19:21])
-    log_day = int(log_timestamp[1:3])
-    log_timestamp_offset = log_timestamp.split(' ')[1][:-1]
-    attacker_utc = datetime(log_year, log_month, log_day, log_hour, log_min, log_sec, tzinfo=attacker_timezone )
-    pass
-
+answer = []
 for item in input:
-    convert_timestamp(item)
-    exit()
+    answer.append(convert_timestamp(item))
 
-
-# print(len(input),input)
-# print(len(answer), answer)
-# response = d.answer(answer)
-# print(response)
-# d.logout()
-# exit()
+print(len(answer), answer)
+response = d.answer(answer)
+print(response)
+d.logout()
+exit()
