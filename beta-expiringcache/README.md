@@ -10,7 +10,7 @@ buffer_size = 3
 cache = functools.lrucache(buffersize=3)
 for i in range(10000000)
     cache.get("big count")
-cache.get('onecounta')
+cache.get('onecounta')bonus-pickler
 cache.get('onecountb')
 cache.get('onecountc')    <= replaces big count in the cache
 
