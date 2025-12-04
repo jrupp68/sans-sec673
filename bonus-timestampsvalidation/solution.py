@@ -19,3 +19,9 @@ for eachstring in input:
 
 response = d.answer(answer)
 d.logout()
+
+
+# convert string to datetime
+# convert datetime back to string
+# if they match then correct
+# if they don't match then incorrect
