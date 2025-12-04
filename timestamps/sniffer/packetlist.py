@@ -43,15 +43,25 @@ class PacketList(list):
     @staticmethod
     def adjust_time(timestamp, from_zone, to_zone=None):
         #Raise TypeError if timestamp isnt a datetime.datetime
+        if not isinstance(timestamp, datetime.datetime):
+            raise TypeError("First arg must be a timestamp")
         #Raise TypeError if fromzone isn't in zoneinfo.available_timezones()
+        if not from_zone in zoneinfo.available_timezones():
+            raise TypeError("Second arg must be a valid timezone")
         #Get a tzinfo record from zoneinfo.ZoneInfo for the from_zone
+        from_zone = zoneinfo.ZoneInfo(from_zone)
         #Convert timestamp to a timezone aware datetime in the from_zone timezone
+        timestamp = timestamp.replace(tzinfo=from_zone)
         #If to_zone is None convert it to the local computer timezone
+        if to_zone != None:
+            if not to_zone in zoneinfo.available_timezones():
+                raise TypeError('Third arg must be a valid timezone')
+            to_zone = zoneinfo.ZoneInfo(to_zone)
+        return timestamp.astimezone(to_zone)
         #If to_zone is not in zoneinfo.available_timezones() raise a TypeError
         #Get a tzinfo record from zoneinfo.ZoneInfo for the to_zone
         #Convert timestamp to the to_zone timezone
         #Return the new timezone
-        pass
 
     def print_timezones(self, client, server):
         if not server in zoneinfo.available_timezones():
