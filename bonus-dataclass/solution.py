@@ -1,7 +1,12 @@
+from dataclasses import dataclass, field
 
-#Must create IPRecord dataclass
+@dataclass
+class IPRecord:
+    name: str = field(repr=False)
+    address: str = field(default="127.0.0.1", repr=False)
 
-
+    def __repr__(self):
+        return f"IPRecord(name='{self.name}')"
 
 
 if __name__ == "__main__":
@@ -9,4 +14,3 @@ if __name__ == "__main__":
     print(repr(rec_x))
     print(rec_x.address)
     print(rec_x.name)
-    
