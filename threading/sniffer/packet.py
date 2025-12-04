@@ -39,6 +39,9 @@ class Packet(UserList):
         super().__init__()
         self.extend(iterable)
 
+    def __hash__(self):
+        return hash(tuple(self.data))
+
     def extend(self, iterable):
         for eachitem in iterable:
             self.append(eachitem)
