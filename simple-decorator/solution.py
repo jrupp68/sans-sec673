@@ -1,7 +1,11 @@
-def create_your_decorator_here():
-    #See README for full the requirements
-    #It should pass all of the test below when this program is executed
-    pass
+def only_lists(function_to_decorate):
+    def new_function(*args, **kwargs):
+        for arg in args:
+            assert isinstance(arg, list), "The argument must be a list"
+        result = function_to_decorate(*args, **kwargs)
+        assert isinstance(result, list), 'The returned value must be a list'
+        return result
+    return new_function
 
 @only_lists
 def add_lists(a,b):
@@ -28,7 +32,7 @@ if __name__=="__main__":
     try:
         print( add_lists_as_tuple([1,2,3], [1,2,3]) )
     except AssertionError as e:
-        print("Successfully raise error ", str(e))
+        print("Successfully raised error ", str(e))
     except:
         print("Not good.  The incorrect error was raised.")
     else:
