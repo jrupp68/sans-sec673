@@ -1,9 +1,8 @@
 import time
 import collections
 from functools import wraps
-import time
 
-def define_a_function_to_create_a_decorated_timed_function_here():
+def timer_log(func_to_decoreate):
     #Complete this decorator as outlined in the README.md.
     #You should calculate elapsed time using time.time() not time.process_time()
     #create a variable named exec_times that is a deque that has a maximum length of 10
@@ -20,7 +19,22 @@ def define_a_function_to_create_a_decorated_timed_function_here():
     #Attach the exec_times deque to the new_function function as an attribute
     #return the new function
     #Remove th next line it isn't needed after you write your (much better) function.
-    start_time = time.time()
+    
+    exec_times = collections.deque(maxlen=10)
+    def new_function(*args, **kwargs):
+        nonlocal exec_times
+        start_time = time.time()
+        result = func_to_decoreate(*args, **kwargs)
+        elapsed = time.time() - start_time
+        exec_times.append(elapsed)
+        return result
+    
+    def times():
+        return list(exec_times)
+
+    new_function.times = times
+    new_function.exec_times = exec_times
+    return new_function
 
 @timer_log
 def mysum(*args):
