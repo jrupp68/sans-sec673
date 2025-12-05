@@ -3,7 +3,7 @@ import logging
 class Adder(object):
     def __init__(self, initial_value):
         self.value = initial_value
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("calculator.support_functions.adder")
         self.logger.warning(f"Set initial value to {initial_value}")
 
     def add(self, *addends):

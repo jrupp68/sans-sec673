@@ -1,10 +1,12 @@
 import logging
-import support_functions.adder
-
 logging.basicConfig(level=logging.DEBUG)
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("calculator")
 handler = logging.FileHandler("/tmp/calculator.log")
+handler.setFormatter(logging.Formatter(logging.BASIC_FORMAT))
+handler.setLevel(logging.WARNING)
+logger.addHandler(handler)
+import support_functions.adder
 
 logger.debug("Adding 10 and 5")
 adder = support_functions.adder.Adder(0)

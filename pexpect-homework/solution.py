@@ -11,9 +11,14 @@ for _ in range(100):
     # answer = hex(integer) doesn't provide padding
     answer = f"0x{integer:02x}"
     client.sendline(answer)
-client.expect("\r\n")
-client.expect("\r\n")
-client.expect("\r\n")
-response = client.before
+# client.expect("\r\n")
+# print(client.before)
+# client.expect("\r\n")
+# print(client.before)
+# client.expect("\r\n")
+# print(client.before)
+# response = client.before
+response = client.read(10240)
+# print(response)
 flag = re.findall(rb"The flag is '(.*?)'", response)[0]
 print(flag.decode())

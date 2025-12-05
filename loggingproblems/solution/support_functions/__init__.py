@@ -1,8 +1,8 @@
 import logging
 import requests
 
-logging.basicConfig(level=logging.WARNING, format=logging.BASIC_FORMAT)
-logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.WARNING, format=logging.BASIC_FORMAT)
+logger = logging.getLogger("calculator.support_functions")
 
 #Confirm internet access:
 try:
