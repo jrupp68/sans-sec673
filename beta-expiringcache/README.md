@@ -43,3 +43,51 @@ False
 >>> x >= y
 True
 ```
+
+
+
+import unittest
+import solution
+import ipaddress
+from collections import UserList
+import datetime
+import pathlib
+
+class TestSolution(unittest.TestCase):
+
+    def test_IPRecord(self):
+        x = solution.IPRecord("1.1.1.1")
+        self.assertIsInstance(x.address, ipaddress.IPv4Address)
+        self.assertIsInstance(x.created, datetime.datetime)
+        self.assertEqual(repr(x),"IPRecord('1.1.1.1')")
+        with self.assertRaises(ValueError):
+            solution.IPRecord("2.2.2.5000")
+        self.assertEqual(str(x), "1.1.1.1")
+
+    def test_comparison(self):
+        x = solution.IPRecord("1.1.1.1")
+        x2 = solution.IPRecord("1.1.1.1")
+        y = solution.IPRecord("2.2.2.2")
+        y2 = solution.IPRecord("2.2.2.2")
+        z = solution.IPRecord("10.10.10.10")
+        z2 = solution.IPRecord("10.10.10.10")
+        self.assertTrue(z>y>x, "Greater than not working")
+        self.assertTrue(x<y<z, "Less than not working")
+        self.assertTrue(x==x2, "Equals not working as expected")
+        self.assertTrue(x!=y, "Not Equals not working as expected")
+        self.assertTrue(z=="10.10.10.10", "Equals not working as expected")
+        self.assertTrue(z>=z2>=y>=y2>=x , "Greater than or equal to is not working")
+        self.assertTrue(x<=x2<=y<=y2<=z, "Less thank or equal to is not working")
+        self.assertFalse(x>y, "Greater than not working")
+        self.assertFalse(z<y, "Less than not working")
+        self.assertFalse(x==y, "Equals not working as expected")
+        self.assertFalse(z=="1.1.1.1", "Equals not working as expected")
+        self.assertFalse(x>=y , "Greater than or equal to is not working")
+        self.assertFalse(z<=y<=x, "Less thank or equal to is not working")
+
+    def test_uses_modules(self):
+        source = pathlib.Path("solution.py").read_text()
+        self.assertTrue( "functools" in source, "You need to import functools")
+        self.assertTrue( "total_ordering" in source, "You need to decorate your class with total_ordering.")
+        print("".join(source.split()).count("def__"))
+        self.assertTrue( "".join(source.split()).count("def__") <= 5, "You are only permitted 5 methods in your source code.")
